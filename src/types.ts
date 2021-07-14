@@ -1,3 +1,5 @@
+import type { Client } from "./deps.ts";
+
 export interface User {
   id: number;
   firstName: string;
@@ -12,4 +14,8 @@ export interface Course {
   estimatedTime: string | null;
   materialsNeeded: string | null;
   creator: User;
+}
+
+export interface DbState {
+  db: Client;
 }
