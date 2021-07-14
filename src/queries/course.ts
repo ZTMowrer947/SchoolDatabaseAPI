@@ -1,4 +1,4 @@
-import db from "../db.ts";
+import type { Client } from "../deps.ts";
 import type { Course } from "../types.ts";
 
 type CoursePreview = Pick<Course, "id" | "title">;
@@ -10,14 +10,17 @@ interface RawCourse extends Omit<Course, "creator"> {
   creatorEmailAddress: string;
 }
 
-export function getCourses(): Promise<CoursePreview[]> {
+export function getCourses(db: Client): Promise<CoursePreview[]> {
   return db.query(`
     SELECT id, title
     FROM Course
   `);
 }
 
-export async function getCourse(id: number): Promise<Course | undefined> {
+export async function getCourse(
+  db: Client,
+  id: number
+): Promise<Course | undefined> {
   const result = (await db.query(
     `
     SELECT Course.id, Course.title, Course.description,
